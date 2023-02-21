@@ -42,8 +42,7 @@ int verificar_erros(int vet[TAM])
 			soma++;
 	}
 
-	result = (soma == 8) ? 1 : 0;
-	return result;
+	return (soma == 8) ? 1 : 0;
 }
 
 void ler_posicao_inicial(int *linha, int *coluna)
@@ -72,7 +71,7 @@ void passeio_do_cavalo_desgovernado(int linha, int coluna, int vet[TAM], int mat
 {
 	int passeio = 0, posicao = 2, andou = 0;
 	system("clear");
-    mostrar_tabuleiro(mat);
+    	mostrar_tabuleiro(mat);
 	srand(time(NULL));
 	while (!verificar_erros(vet))
 	{
