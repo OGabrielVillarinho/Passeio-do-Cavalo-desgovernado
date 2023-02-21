@@ -73,7 +73,7 @@ void passeio_do_cavalo_desgovernado(int linha, int coluna, int vet[TAM], int mat
 	int passeio = 0, posicao = 2;
 	system("cls");
 	srand(time(NULL));
-	while (verificar_erros(vet) != 1)
+	while (!verificar_erros(vet))
 	{
 
 		passeio = rand() % 8;
