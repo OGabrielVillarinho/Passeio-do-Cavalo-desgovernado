@@ -46,7 +46,7 @@ int verificar_erros(int vet[TAM])
 	return result;
 }
 
-void ler_posicao_inicial(int *linha, int *coluna, int mat[][TAM])
+void ler_posicao_inicial(int *linha, int *coluna)
 {
 	int x, y;
 	printf("Jogada Inicial: (0 / 7)\n");
@@ -70,17 +70,14 @@ void ler_posicao_inicial(int *linha, int *coluna, int mat[][TAM])
 
 void passeio_do_cavalo_desgovernado(int linha, int coluna, int vet[TAM], int mat[][TAM])
 {
-	int passeio = 0, posicao = 2;
-	system("cls");
+	int passeio = 0, posicao = 2, andou = 0;
+	system("clear");
+    mostrar_tabuleiro(mat);
 	srand(time(NULL));
 	while (!verificar_erros(vet))
 	{
 
 		passeio = rand() % 8;
-		printf("Passeio escolhido -> %d\n", passeio);
-		printf("Linha-> %d\n", linha);
-		printf("Coluna-> %d\n", coluna);
-
 		switch (passeio)
 		{
 		case 0:
@@ -94,11 +91,14 @@ void passeio_do_cavalo_desgovernado(int linha, int coluna, int vet[TAM], int mat
 				linha += 2;
 				coluna -= 1;
 				posicao++;
+				andou = 1;
 				break;
 			}
 			else
 			{
 				vet[passeio] = 1;
+
+				andou = 0;
 				break;
 			}
 		case 1:
@@ -112,11 +112,13 @@ void passeio_do_cavalo_desgovernado(int linha, int coluna, int vet[TAM], int mat
 				linha += 2;
 				coluna += 1;
 				posicao++;
+				andou = 1;
 				break;
 			}
 			else
 			{
 				vet[passeio] = 1;
+				andou = 0;
 				break;
 			}
 		case 2:
@@ -130,11 +132,13 @@ void passeio_do_cavalo_desgovernado(int linha, int coluna, int vet[TAM], int mat
 				linha -= 2;
 				coluna += 1;
 				posicao++;
+				andou = 1;
 				break;
 			}
 			else
 			{
 				vet[passeio] = 1;
+				andou = 0;
 				break;
 			}
 		case 3:
@@ -148,11 +152,13 @@ void passeio_do_cavalo_desgovernado(int linha, int coluna, int vet[TAM], int mat
 				linha -= 1;
 				coluna += 2;
 				posicao++;
+				andou = 1;
 				break;
 			}
 			else
 			{
 				vet[passeio] = 1;
+				andou = 0;
 				break;
 			}
 		case 4:
@@ -166,11 +172,13 @@ void passeio_do_cavalo_desgovernado(int linha, int coluna, int vet[TAM], int mat
 				linha += 1;
 				coluna += 2;
 				posicao++;
+				andou = 1;
 				break;
 			}
 			else
 			{
 				vet[passeio] = 1;
+				andou = 0;
 				break;
 			}
 		case 5:
@@ -185,11 +193,13 @@ void passeio_do_cavalo_desgovernado(int linha, int coluna, int vet[TAM], int mat
 				linha -= 2;
 				coluna -= 1;
 				posicao++;
+				andou = 1;
 				break;
 			}
 			else
 			{
 				vet[passeio] = 1;
+				andou = 0;
 				break;
 			}
 		case 6:
@@ -203,11 +213,13 @@ void passeio_do_cavalo_desgovernado(int linha, int coluna, int vet[TAM], int mat
 				linha -= 1;
 				coluna -= 2;
 				posicao++;
+				andou = 1;
 				break;
 			}
 			else
 			{
 				vet[passeio] = 1;
+				andou = 0;
 				break;
 			}
 		case 7:
@@ -221,19 +233,26 @@ void passeio_do_cavalo_desgovernado(int linha, int coluna, int vet[TAM], int mat
 				linha += 1;
 				coluna -= 2;
 				posicao++;
+				andou = 1;
 				break;
 			}
 			else
 			{
 				vet[passeio] = 1;
+				andou = 0;
 				break;
 			}
 		}
-		mostrar_tabuleiro(mat);
+		if (andou)
+		{
+			printf("Passeio escolhido -> %d\n", passeio);
+			printf("Linha-> %d\n", linha);
+			printf("Coluna-> %d\n", coluna);
+			mostrar_tabuleiro(mat);
+		}
 	}
 	printf("QUANTIDADE DE CASAS VISITADAS-> %d\n", posicao - 1);
-	printf("QUANTIDADE DE CASAS NAO VISITADAS-> %d\n", (TAM*TAM) - posicao + 1);
-
+	printf("QUANTIDADE DE CASAS NAO VISITADAS-> %d\n", (TAM * TAM) - posicao + 1);
 }
 
 int main()
@@ -242,9 +261,8 @@ int main()
 	int linha, coluna;
 	int erros[TAM] = {0};
 
-	ler_posicao_inicial(&linha, &coluna, tabuleiro);
+	ler_posicao_inicial(&linha, &coluna);
 	tabuleiro[linha][coluna] = 1;
-	mostrar_tabuleiro(tabuleiro);
 	passeio_do_cavalo_desgovernado(linha, coluna, erros, tabuleiro);
 
 	return 0;
