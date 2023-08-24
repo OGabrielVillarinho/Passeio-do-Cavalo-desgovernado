@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 #define TAM 8
 
 /*
@@ -11,13 +12,9 @@
 
 */
 
-void criar_uma_linha(int tam_linha)
-// Essa função complementa a função mostrar_tabuleiro
+void limparVetor(int *vet)
 {
-	printf("\n");
-	for (int i = 0; i < tam_linha; i++)
-		printf("-");
-	printf("\n");
+	memset(vet, 0, TAM * sizeof(int));
 }
 
 void mostrar_tabuleiro(int mat[TAM][TAM])
@@ -29,7 +26,7 @@ void mostrar_tabuleiro(int mat[TAM][TAM])
 		for (int j = 0; j < TAM; j++)
 			(mat[i][j] < 10) ? printf("|0%d| ", mat[i][j]) : printf("|%d| ", mat[i][j]);
 
-		criar_uma_linha(39);
+		printf("\n---------------------------------------\n");
 	}
 }
 
@@ -37,12 +34,10 @@ int verificar_erros(int vet[TAM])
 {
 	int soma = 0, result;
 	for (int i = 0; i < TAM; i++)
-	{
 		if (vet[i] == 1)
 			soma++;
-	}
 
-	return (soma == 8) ? 1 : 0;
+	return soma == 8;
 }
 
 void ler_posicao_inicial(int *linha, int *coluna)
@@ -71,7 +66,7 @@ void passeio_do_cavalo_desgovernado(int linha, int coluna, int vet[TAM], int mat
 {
 	int passeio = 0, posicao = 2, andou = 0;
 	system("clear");
-    	mostrar_tabuleiro(mat);
+	mostrar_tabuleiro(mat);
 	srand(time(NULL));
 	while (!verificar_erros(vet))
 	{
@@ -85,8 +80,7 @@ void passeio_do_cavalo_desgovernado(int linha, int coluna, int vet[TAM], int mat
 				// Duas casas para baixo e 1 para esquerda
 				mat[linha + 2][coluna - 1] = posicao;
 
-				for (int i = 0; i < TAM; i++)
-					vet[i] = 0;
+				limparVetor(vet);
 				linha += 2;
 				coluna -= 1;
 				posicao++;
@@ -106,8 +100,7 @@ void passeio_do_cavalo_desgovernado(int linha, int coluna, int vet[TAM], int mat
 				// Duas casas para baixo e 1 para direita
 				mat[linha + 2][coluna + 1] = posicao;
 
-				for (int i = 0; i < TAM; i++)
-					vet[i] = 0;
+				limparVetor(vet);
 				linha += 2;
 				coluna += 1;
 				posicao++;
@@ -126,8 +119,7 @@ void passeio_do_cavalo_desgovernado(int linha, int coluna, int vet[TAM], int mat
 				// duas casas para cima e uma para direita
 				mat[linha - 2][coluna + 1] = posicao;
 
-				for (int i = 0; i < TAM; i++)
-					vet[i] = 0;
+				limparVetor(vet);
 				linha -= 2;
 				coluna += 1;
 				posicao++;
@@ -146,8 +138,7 @@ void passeio_do_cavalo_desgovernado(int linha, int coluna, int vet[TAM], int mat
 				// Uma casa para cima e duas para direita
 				mat[linha - 1][coluna + 2] = posicao;
 
-				for (int i = 0; i < TAM; i++)
-					vet[i] = 0;
+				limparVetor(vet);
 				linha -= 1;
 				coluna += 2;
 				posicao++;
@@ -166,8 +157,7 @@ void passeio_do_cavalo_desgovernado(int linha, int coluna, int vet[TAM], int mat
 				// Uma casa para baixo e duas para direita
 				mat[linha + 1][coluna + 2] = posicao;
 
-				for (int i = 0; i < TAM; i++)
-					vet[i] = 0;
+				limparVetor(vet);
 				linha += 1;
 				coluna += 2;
 				posicao++;
@@ -186,9 +176,7 @@ void passeio_do_cavalo_desgovernado(int linha, int coluna, int vet[TAM], int mat
 				// Duas casas para baixo e uma para esquerda
 				mat[linha - 2][coluna - 1] = posicao;
 
-				for (int i = 0; i < TAM; i++)
-					vet[i] = 0;
-
+				limparVetor(vet);
 				linha -= 2;
 				coluna -= 1;
 				posicao++;
@@ -207,8 +195,7 @@ void passeio_do_cavalo_desgovernado(int linha, int coluna, int vet[TAM], int mat
 				// Uma casa para baixo e duas para esquerda
 				mat[linha - 1][coluna - 2] = posicao;
 
-				for (int i = 0; i < TAM; i++)
-					vet[i] = 0;
+				limparVetor(vet);
 				linha -= 1;
 				coluna -= 2;
 				posicao++;
@@ -227,8 +214,7 @@ void passeio_do_cavalo_desgovernado(int linha, int coluna, int vet[TAM], int mat
 				// Uma casa para baixo e duas para esquerda
 				mat[linha + 1][coluna - 2] = posicao;
 
-				for (int i = 0; i < TAM; i++)
-					vet[i] = 0;
+				limparVetor(vet);
 				linha += 1;
 				coluna -= 2;
 				posicao++;
